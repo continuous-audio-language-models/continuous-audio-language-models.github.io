@@ -71,7 +71,7 @@
       This section presents speech samples generated using a 3-second prompt. Key details of the setup and results include:
       <ul>
         <li>
-          Starting from a pretrained 2B parameter text language model, we adopt the <strong>inner monologue framework</strong>, where the model is fine-tuned with an audio stream delayed by 80 ms after the textual stream.</li>
+          Starting from a Helium pretrained 2B parameters text language model [1], we adopt the <strong>inner monologue framework</strong> from [2], where the model is fine-tuned with an audio stream delayed by 80 ms after the textual stream.</li>
           </ul>
         </li>
         <li>
@@ -167,7 +167,7 @@
         <li><strong>CALM with TrigFlow (100 steps):</strong> Slower inference than the baseline.</li>
         <li><strong>CALM with Consistency (4 steps):</strong> Inference is 1.9× faster than the baseline.</li>
         <li><strong>CALM with Consistency (1 step):</strong> Inference is 2.1× faster than the baseline.</li>
-        <li><strong>Retrained MusicGen:</strong> Trained on our dataset, with inference 1.3× faster than the baseline.</li>
+        <li><strong>Retrained MusicGen [3]:</strong> Trained on our dataset, with inference 1.3× faster than the baseline.</li>
       </ul>
     </p>
           <div class="table-responsive">
@@ -179,7 +179,7 @@
             <th>CALM TrigFlow 100 steps</th>
             <th>CALM Consistency 4 steps</th>
             <th>CALM Consistency 1 step</th>
-            <th>MusicGen</th>
+            <th>Retrained MusicGen</th>
           </tr>
         </thead>
         <tbody>
@@ -270,12 +270,12 @@
   <div class="container">
     <h2>Ablation Study</h2>
     <p>
-      We illustrate here the ablation study of our paper in order to show the importance of each component of our model. We showcase it on Music Generation with CALM Consistency 4 steps. All the models have been trained 300k steps.
+      We illustrate here the ablation study of our paper in order to show the importance of each component of our model. We showcase it on Music Generation with CALM Consistency 4 steps. All the models have been trained 300k steps instead of 500k steps.
       <ul>
         <li><strong>Our model with Noise Augmentation, Short Context transformer and Head Batch Multiplier.</strong> CALM Consistency 4 steps.</li>
-        <li><strong>Without Noise Augmentation, Short Context transformer and Head Batch Multiplier.</strong> This configuration is very close to MAR [2]. It consists in just replacing the codec by a VAE and replacing the RQ-Transformer head by a consistency model. This model suffers from error accumulation, doesn't generate consistent music and tends to diverge (distorsion quickly happens).</li>
-        <li><strong>Without Short Context Transformer. </strong> Here, the addition of Noise Augmentation makes the model less sensitive to error accumulation. However, it quickly stops generating details focuses on the rhythmic and fades away during generation. This configuration is similar to the one used in [3] where the author generate short single instrument music.</li>
-        <li><strong>Without Noise Augmentation. </strong> Here, there is no Noise Augmentation at training time but there is the Short Context Transformer that greatly helps the model to generate details. Error accumulation disappears in that configuration.</li>
+        <li><strong>Without Noise Augmentation, Short Context transformer and Head Batch Multiplier.</strong> This configuration is very close to MAR [4]. It consists in just replacing the codec by a VAE and replacing the RQ-Transformer head by a consistency model. This model suffers from error accumulation, doesn't generate consistent music and tends to diverge (distorsion quickly happens).</li>
+        <li><strong>Without Short Context Transformer. </strong> Here, the addition of Noise Augmentation makes the model less sensitive to error accumulation. However, it quickly stops generating details focuses on the rhythmic and fades away during generation. This configuration is similar to the one used in [5] where the authors generate short single instrument music.</li>
+        <li><strong>Without Noise Augmentation. </strong> Here, there is no Noise Augmentation at training time but there is the Short Context Transformer that greatly helps the model to generate details. However there is still some error accumulation (see the 3rd sample).</li>
         <li><strong>Without Head Batch Multiplier.</strong> Here, the model convergence is slower, its quality is lower for the same number of epochs.</li>
       </ul>
     </p>
@@ -322,6 +322,32 @@
     </div>
   </div>
 </section>  
+
+<!-- References Section -->
+<section id="references" class="py-5 bg-light">
+  <div class="container">
+    <h2>References</h2>
+    <ul>
+      <li>
+        [1] Kyutai <em>"Helium 1: a modular and multilingual LLM"</em> <a href="https://kyutai.org/2025/04/30/helium.html" target="_blank">website</a>, 2025.
+      </li>
+      <li>
+        [2] Défossez, A., Mazaré, L., Orsini, M., Royer, A., Pérez, P., Jégou, H., Grave, E., & Zeghidour, N. (2024). <em>Moshi: A speech-text foundation model for real-time dialogue</em>. arXiv preprint arXiv:2410.00037. Available at: <a href="https://arxiv.org/abs/2410.00037" target="_blank">https://arxiv.org/abs/2410.00037</a>
+      </li>
+      <li>
+        [3] Copet, J., Kreuk, F., Gat, I., Remez, T., Kant, D., Synnaeve, G., Adi, Y., & Défossez, A. <em>"Simple and Controllable Music Generation."</em> <a href="https://arxiv.org/abs/2306.05284" target="_blank">arXiv:2306.05284</a>, 2023.
+      </li>
+              <li>
+      [4] Li, T., Tian, Y., Li, H., Deng, M., & He, K. (2024). <em>Autoregressive Image Generation Without Vector Quantization</em>. arXiv preprint arXiv:2406.11838. Available at: <a href="https://arxiv.org/abs/2406.11838" target="_blank">https://arxiv.org/abs/2406.11838</a>
+              </li>
+              <li>
+                [5] Pasini, M., Nistal, J., Lattner, S., & Fazekas, G. (2024). <em>Continuous Autoregressive Models with Noise Augmentation Avoid Error Accumulation</em>. arXiv preprint arXiv:2411.18447. Available at: <a href="https://arxiv.org/abs/2411.18447" target="_blank">https://arxiv.org/abs/2411.18447</a>
+              </li>
+        
+    </ul>
+  </div>
+</section>
+
 
   <!-- Footer -->
   <footer class="py-5 bg-dark">
